@@ -1,63 +1,55 @@
 const { v4 } = require("uuid");
+
 const path = require("path");
 const fs = require("fs").promises;
 
 const contactsPath = path.join("db", "contacts.json");
 
-// TODO: задокументировать каждую функцию
 async function listContacts() {
   try {
-    const readContactsJson = await fs.readFile(contactsPath);
-    const contacts = JSON.parse(readContactsJson);
-    // console.table(contacts);
+    const data = await fs.readFile(contactsPath);
+    const contacts = JSON.parse(data);
+
     return contacts;
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
   }
 }
-// listContacts();
 
 async function getContactById(contactId) {
   try {
     const contacts = await listContacts();
-    const getContact = contacts.find((contact) => {
-      const id = Number(contact.id);
-      return id === contactId;
-    });
+    const getContact = contacts.find((contact) => contact.id === contactId);
 
     return getContact;
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
   }
 }
-
-// console.log(getContactById(2));
 
 async function removeContact(contactId) {
   try {
     const contacts = await listContacts();
-    const removeContact = contacts.filter((contact) => {
-      const id = Number(contact.id);
-      return id !== contactId;
-    });
-    console.log(removeContact);
+    const removeContact = contacts.filter(
+      (contact) => contact.id !== contactId
+    );
+    await fs.writeFile(contactsPath, JSON.stringify(removeContact));
     return removeContact;
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
   }
 }
 
-console.log(removeContact(6));
-
-async function addContact(data) {
+async function addContact(name, email, phone) {
   try {
     const contacts = await listContacts();
-    const newContact = { ...data, id: v4() };
+    const newContact = { name, email, phone, id: v4() };
     contacts.push(newContact);
+
     await fs.writeFile(contactsPath, JSON.stringify(contacts));
     return newContact;
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
   }
 }
 
