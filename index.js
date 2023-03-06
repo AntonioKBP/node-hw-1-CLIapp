@@ -46,7 +46,3 @@ async function invokeAction({ action, id, name, email, phone }) {
 }
 
 invokeAction(argv);
-
-//  name: "Anton Kovsh",
-//   email: "kapacity@nonenimMauris.net",
-//   phone: "(542) 451-7038",
