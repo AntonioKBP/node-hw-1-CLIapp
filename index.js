@@ -23,11 +23,12 @@ async function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
     case "list":
       const contacts = await listContacts();
-      console.log(contacts);
+      console.table(contacts);
       break;
 
     case "get":
-      const getContact = await getContactById(id);
+      const getContacts = await getContactById(id);
+      console.log(getContacts);
       break;
 
     case "add":
@@ -43,4 +44,8 @@ async function invokeAction({ action, id, name, email, phone }) {
   }
 }
 
-invokeAction({action: list});
+invokeAction(argv);
+
+//  name: "Anton Kovsh",
+//   email: "kapacity@nonenimMauris.net",
+//   phone: "(542) 451-7038",

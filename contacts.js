@@ -20,12 +20,12 @@ async function listContacts() {
 async function getContactById(contactId) {
   try {
     const contacts = await listContacts();
-    const result = contacts.find((contact) => {
+    const getContact = contacts.find((contact) => {
       const id = Number(contact.id);
       return id === contactId;
     });
-    console.log(result);
-    return result;
+
+    return getContact;
   } catch (error) {
     console.log(error.message);
   }
@@ -33,17 +33,15 @@ async function getContactById(contactId) {
 
 // console.log(getContactById(2));
 
-
-
 async function removeContact(contactId) {
   try {
     const contacts = await listContacts();
-    const removeContacts = contacts.filter((contact) => {
+    const removeContact = contacts.filter((contact) => {
       const id = Number(contact.id);
       return id !== contactId;
     });
-    // console.log(removeContacts);
-    return removeContacts;
+    console.log(removeContact);
+    return removeContact;
   } catch (error) {
     console.log(error.message);
   }
@@ -57,25 +55,11 @@ async function addContact(data) {
     const newContact = { ...data, id: v4() };
     contacts.push(newContact);
     await fs.writeFile(contactsPath, JSON.stringify(contacts));
-    return contacts;
+    return newContact;
   } catch (error) {
     console.log(error.message);
   }
 }
-
-// async function addContact(name, email, phone) {
-//   const contacts = await listContacts();
-//   const newContact = { name, email, phone, id: v4() };
-//   contacts.push(newContact);
-//   return contacts;
-// }
-// const tryData = {
-//   name: "Anton Kovsh",
-//   email: "kapacity@nonenimMauris.net",
-//   phone: "(542) 451-7038",
-// };
-
-// addContact(tryData);
 
 module.exports = {
   listContacts,
