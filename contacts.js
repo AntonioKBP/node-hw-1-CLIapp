@@ -9,13 +9,13 @@ async function listContacts() {
   try {
     const readContactsJson = await fs.readFile(contactsPath);
     const contacts = JSON.parse(readContactsJson);
-    console.table(contacts);
+    // console.table(contacts);
     return contacts;
   } catch (error) {
     console.log(error.message);
   }
 }
-listContacts();
+// listContacts();
 
 async function getContactById(contactId) {
   try {
@@ -24,9 +24,6 @@ async function getContactById(contactId) {
       const id = Number(contact.id);
       return id === contactId;
     });
-    if (!result) {
-      return null;
-    }
     console.log(result);
     return result;
   } catch (error) {
@@ -34,16 +31,32 @@ async function getContactById(contactId) {
   }
 }
 
-// console.log(getContactById(5));
+// console.log(getContactById(2));
+
+// async function removeContact(contactId) {
+//   const contacts = await listContacts();
+//   const removeContact = contacts.filter((contact) => {
+//     const id = Number(contact.id);
+//     return id !== contactId;
+//   });
+//   return removeContact;
+// }
 
 async function removeContact(contactId) {
-  const contacts = await listContacts();
-  const idx = contacts.findIndex((contact) => contact.id === contactId);
-  const removeContact = contacts.splice(idx, 1);
-  return removeContact;
+  try {
+    const contacts = await listContacts();
+    const removeContacts = contacts.filter((contact) => {
+      const id = Number(contact.id);
+      return id !== contactId;
+    });
+    console.log(removeContacts);
+    return removeContacts;
+  } catch (error) {
+    console.log(error.message);
+  }
 }
 
-removeContact(2);
+console.log(removeContact(6));
 
 async function addContact(data) {
   try {
@@ -57,16 +70,23 @@ async function addContact(data) {
   }
 }
 
-// (tryData = {
-//   name: "Anton Kovsh",
-//   email: "kapacity@nonenimMauris.net",
-//   phone: "(542) 451-7038",
-// }),
-//   addContact(tryData);
-
-module.exports = {
-  listContacts,
-  getContactById,
-  removeContact,
-  addContact,
+// async function addContact(name, email, phone) {
+//   const contacts = await listContacts();
+//   const newContact = { name, email, phone, id: v4() };
+//   contacts.push(newContact);
+//   return contacts;
+// }
+const tryData = {
+  name: "Anton Kovsh",
+  email: "kapacity@nonenimMauris.net",
+  phone: "(542) 451-7038",
 };
+
+addContact(tryData);
+
+// module.exports = {
+//   listContacts,
+//   getContactById,
+//   removeContact,
+//   addContact,
+// };
