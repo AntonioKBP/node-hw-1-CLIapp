@@ -1,8 +1,8 @@
 const {
   listContacts,
   getContactById,
-  // removeContact,
-  // addContact,
+  removeContact,
+  addContact,
 } = require("./contacts");
 
 const { Command } = require("commander");
@@ -19,22 +19,23 @@ program.parse(process.argv);
 const argv = program.opts();
 
 // TODO: рефакторить
-function invokeAction({ action, id, name, email, phone }) {
+async function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
     case "list":
-      // ...
+      const contacts = await listContacts();
+      console.log(contacts);
       break;
 
     case "get":
-      // ... id
+      const getContact = await getContactById(id);
       break;
 
     case "add":
-      // ... name email phone
+      const addContacts = await addContact(name, email, phone);
       break;
 
     case "remove":
-      // ... id
+      const removeContacts = await removeContact(id);
       break;
 
     default:
@@ -42,4 +43,4 @@ function invokeAction({ action, id, name, email, phone }) {
   }
 }
 
-invokeAction(argv);
+invokeAction({action: list});

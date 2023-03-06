@@ -33,14 +33,7 @@ async function getContactById(contactId) {
 
 // console.log(getContactById(2));
 
-// async function removeContact(contactId) {
-//   const contacts = await listContacts();
-//   const removeContact = contacts.filter((contact) => {
-//     const id = Number(contact.id);
-//     return id !== contactId;
-//   });
-//   return removeContact;
-// }
+
 
 async function removeContact(contactId) {
   try {
@@ -49,7 +42,7 @@ async function removeContact(contactId) {
       const id = Number(contact.id);
       return id !== contactId;
     });
-    console.log(removeContacts);
+    // console.log(removeContacts);
     return removeContacts;
   } catch (error) {
     console.log(error.message);
@@ -76,17 +69,17 @@ async function addContact(data) {
 //   contacts.push(newContact);
 //   return contacts;
 // }
-const tryData = {
-  name: "Anton Kovsh",
-  email: "kapacity@nonenimMauris.net",
-  phone: "(542) 451-7038",
-};
-
-addContact(tryData);
-
-// module.exports = {
-//   listContacts,
-//   getContactById,
-//   removeContact,
-//   addContact,
+// const tryData = {
+//   name: "Anton Kovsh",
+//   email: "kapacity@nonenimMauris.net",
+//   phone: "(542) 451-7038",
 // };
+
+// addContact(tryData);
+
+module.exports = {
+  listContacts,
+  getContactById,
+  removeContact,
+  addContact,
+};
